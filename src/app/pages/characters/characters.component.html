@@ -71,16 +71,11 @@
       </div>
     </div>
   </div>
-  <div>
-    <div class="flex justify-center items-center space-x-2 mt-4">
-      <button (click)="handlePrevious()">Previous</button>
-
-      <button>
-        {{ totalPages }}
-      </button>
-      <button>Next</button>
-    </div>
-  </div>
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChanged)="handlePagination($event)"
+  />
 </ng-container>
 <ng-template #loadingCard>
   <app-loader />

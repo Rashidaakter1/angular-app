@@ -1,1 +1,19 @@
-<p>pagination works!</p>
+ <div class="pagination flex justify-end items-center mt-6 mb-6">
+    <button
+      (click)="handlePrevious()"
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 border rounded-md bg-gray-900"
+    >
+      Previous
+    </button>
+
+    <span class="mx-2">Page {{ currentPage }} of {{ totalPages }}</span>
+
+    <button
+      (click)="handleNext()"
+      [disabled]="currentPage === totalPages"
+      class="px-4 py-2 border rounded-md bg-gray-900"
+    >
+      Next
+    </button>
+  </div>

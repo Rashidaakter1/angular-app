@@ -20,7 +20,11 @@
           <span
             class="grid h-20 w-20 place-items-center rounded-full bg-[#2A2A2A] transition-all duration-300 group-hover:bg-[#0FF1B3]"
           >
-            <img class="w-12 h-8" src="https://i.ibb.co.com/Tg3tLC5/album.png" alt="album" />
+            <img
+              class="w-12 h-8"
+              src="https://i.ibb.co.com/Tg3tLC5/album.png"
+              alt="album"
+            />
           </span>
           <div
             class="text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90"
@@ -49,6 +53,11 @@
       </div>
     </div>
   </div>
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChanged)="handlePagination($event)"
+  />
 </ng-container>
 <ng-template #loadingCard>
   <app-loader />

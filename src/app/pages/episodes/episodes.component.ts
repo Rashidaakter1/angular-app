@@ -5,10 +5,11 @@ import { RickAndMortyService } from '../../core/services/moduleServices/rick-and
 import { HttpParams } from '@angular/common/http';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { LoaderComponent } from '../../shared/loader/loader.component';
+import { PaginationComponent } from '../../shared/reuseable/pagination/pagination.component';
 
 @Component({
   selector: 'app-episodes',
-  imports: [AsyncPipe, CommonModule, LoaderComponent],
+  imports: [AsyncPipe, CommonModule, LoaderComponent, PaginationComponent],
   templateUrl: './episodes.component.html',
   styleUrl: './episodes.component.css',
 })
@@ -36,5 +37,11 @@ export class EpisodesComponent {
         return of([]);
       })
     );
+  }
+
+  handlePagination(page: any) {
+    this.currentPage = page;
+    this.getEpisodes();
+    // console.log(page);
   }
 }

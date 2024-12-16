@@ -4,12 +4,12 @@ import { ICharacter } from '../../core/models/ICharacter';
 import { catchError, map, Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { LoaderComponent } from '../../shared/loader/loader.component';
+import { PaginationComponent } from '../../shared/reuseable/pagination/pagination.component';
 
 @Component({
   selector: 'app-characters',
-  imports: [AsyncPipe, CommonModule,LoaderComponent],
+  imports: [AsyncPipe, CommonModule, LoaderComponent, PaginationComponent],
   templateUrl: './characters.component.html',
   styleUrl: './characters.component.css',
 })
@@ -18,16 +18,18 @@ export class CharactersComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
   errorMessage: string = '';
+
   constructor(private rickAndMortyService: RickAndMortyService) {}
   ngOnInit(): void {
     this.getCharacter();
   }
 
   getCharacter() {
-    const params = new HttpParams().set('pages', '1');
+    const params = new HttpParams().set('page', this.currentPage.toString());
     this.characters$ = this.rickAndMortyService.getCharacters(params).pipe(
       map((result: any) => {
         this.totalPages = result.info.pages;
+        // console.log(result.results);
         return result.results;
       }),
       catchError((error) => {
@@ -39,15 +41,9 @@ export class CharactersComponent implements OnInit {
     );
   }
 
-  handlePrevious = () => {
-    if (this.currentPage > 1) {
-      this.currentPage - 1;
-    }
-  };
-
-  handleNext = () => {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage + 1;
-    }
-  };
+  handlePagination(page: any) {
+    this.currentPage = page;
+    this.getCharacter();
+    // console.log(page);
+  }
 }
