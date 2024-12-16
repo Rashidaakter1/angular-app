@@ -4,10 +4,12 @@ import { ICharacter } from '../../core/models/ICharacter';
 import { catchError, map, Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { LoaderComponent } from '../../shared/loader/loader.component';
 
 @Component({
   selector: 'app-characters',
-  imports: [AsyncPipe, CommonModule],
+  imports: [AsyncPipe, CommonModule,LoaderComponent],
   templateUrl: './characters.component.html',
   styleUrl: './characters.component.css',
 })
