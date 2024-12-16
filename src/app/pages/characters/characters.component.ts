@@ -6,26 +6,38 @@ import { HttpParams } from '@angular/common/http';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { PaginationComponent } from '../../shared/reuseable/pagination/pagination.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-characters',
-  imports: [AsyncPipe, CommonModule, LoaderComponent, PaginationComponent],
+  imports: [
+    AsyncPipe,
+    CommonModule,
+    LoaderComponent,
+    PaginationComponent,
+    FormsModule,
+  ],
   templateUrl: './characters.component.html',
   styleUrl: './characters.component.css',
 })
 export class CharactersComponent implements OnInit {
   characters$: Observable<ICharacter[]> | undefined;
   currentPage: number = 1;
+  selectedStatus: string = '';
   totalPages: number = 1;
   errorMessage: string = '';
-
+  statusOptions: string[] = ['Alive', 'Dead', 'Unknown'];
+  searchTerm: string = '';
   constructor(private rickAndMortyService: RickAndMortyService) {}
   ngOnInit(): void {
     this.getCharacter();
   }
 
   getCharacter() {
-    const params = new HttpParams().set('page', this.currentPage.toString());
+    const params = new HttpParams()
+      .set('page', this.currentPage.toString())
+      .set('status', this.selectedStatus.toLowerCase())
+      .set('name', this.searchTerm.toLocaleLowerCase());
     this.characters$ = this.rickAndMortyService.getCharacters(params).pipe(
       map((result: any) => {
         this.totalPages = result.info.pages;
@@ -45,5 +57,12 @@ export class CharactersComponent implements OnInit {
     this.currentPage = page;
     this.getCharacter();
     // console.log(page);
+  }
+  handleStatusChange() {
+    this.getCharacter();
+  }
+  handleSearchChange() {
+    // console.log(this.searchTerm);
+    this.getCharacter();
   }
 }
