@@ -47,6 +47,9 @@
       <button>Next</button>
     </div>
   </div>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
 </ng-container>
 <ng-template #nodataCard>
   <div

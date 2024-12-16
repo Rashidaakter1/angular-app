@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RickAndMortyService } from '../../core/services/moduleServices/rick-and-morty-service.service';
 import { ICharacter } from '../../core/models/ICharacter';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { AsyncPipe, CommonModule } from '@angular/common';
 
@@ -15,6 +15,7 @@ export class CharactersComponent implements OnInit {
   characters$: Observable<ICharacter[]> | undefined;
   currentPage: number = 1;
   totalPages: number = 1;
+  errorMessage: string = '';
   constructor(private rickAndMortyService: RickAndMortyService) {}
   ngOnInit(): void {
     this.getCharacter();
@@ -26,6 +27,12 @@ export class CharactersComponent implements OnInit {
       map((result: any) => {
         this.totalPages = result.info.pages;
         return result.results;
+      }),
+      catchError((error) => {
+        this.errorMessage =
+          'Failed to load characters. Please try again later.';
+        console.error('Error occurred:', error);
+        return of([]);
       })
     );
   }
