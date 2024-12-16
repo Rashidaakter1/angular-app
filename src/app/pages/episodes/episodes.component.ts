@@ -7,6 +7,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { PaginationComponent } from '../../shared/reuseable/pagination/pagination.component';
 import { FormsModule } from '@angular/forms';
+import { FiltersComponent } from '../../shared/reuseable/filters/filters.component';
 
 @Component({
   selector: 'app-episodes',
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     LoaderComponent,
     PaginationComponent,
     FormsModule,
+    FiltersComponent,
   ],
   templateUrl: './episodes.component.html',
   styleUrl: './episodes.component.css',
@@ -54,8 +56,8 @@ export class EpisodesComponent {
     this.getEpisodes();
     // console.log(page);
   }
-  handleSearchChange() {
-    // console.log(this.searchTerm);
+  handleSearchChange(value: string) {
+    this.searchTerm = value;
     this.getEpisodes();
   }
 }

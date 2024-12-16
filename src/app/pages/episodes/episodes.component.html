@@ -2,16 +2,10 @@
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
-  <div class="mb-4 text-sm">
-    Search By Name
-    <input
-      type="text"
-      placeholder="Search by name"
-      [(ngModel)]="searchTerm"
-      (keyup)="handleSearchChange()"
-      class="p-2 border rounded-md w-full text-[#1a1a1a] mt-2"
-    />
-  </div>
+  <app-filters
+    [searchTerm]="searchTerm"
+    (searchChange)="handleSearchChange($event)"
+  />
 
   <ng-container *ngIf="episodes$ | async as episodes; else loadingCard">
     <div

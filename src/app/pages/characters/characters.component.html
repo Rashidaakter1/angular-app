@@ -2,7 +2,7 @@
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
-  <div class="mb-4 text-sm">
+  <!-- <div class="mb-4 text-sm">
     Search By Name
     <input
       type="text"
@@ -11,7 +11,11 @@
       (keyup)="handleSearchChange()"
       class="p-2 border rounded-md w-full text-[#1a1a1a] mt-2"
     />
-  </div>
+  </div> -->
+  <app-filters
+    [searchTerm]="searchTerm"
+    (searchChange)="handleSearchChange($event)"
+  />
   <div class="mb-6">
     <label for="status" class="block text-sm font-medium text-white">
       Filter by Status:
