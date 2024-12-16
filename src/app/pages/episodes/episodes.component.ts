@@ -6,10 +6,17 @@ import { HttpParams } from '@angular/common/http';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { PaginationComponent } from '../../shared/reuseable/pagination/pagination.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-episodes',
-  imports: [AsyncPipe, CommonModule, LoaderComponent, PaginationComponent],
+  imports: [
+    AsyncPipe,
+    CommonModule,
+    LoaderComponent,
+    PaginationComponent,
+    FormsModule,
+  ],
   templateUrl: './episodes.component.html',
   styleUrl: './episodes.component.css',
 })
@@ -18,13 +25,16 @@ export class EpisodesComponent {
   currentPage: number = 1;
   totalPages: number = 1;
   errorMessage: string = '';
+  searchTerm: string = '';
   constructor(private rickAndMortyService: RickAndMortyService) {}
   ngOnInit(): void {
     this.getEpisodes();
   }
 
   getEpisodes() {
-    const params = new HttpParams().set('pages', '1');
+    const params = new HttpParams()
+      .set('pages', '1')
+      .set('name', this.searchTerm.toLocaleLowerCase());
     this.episodes$ = this.rickAndMortyService.getEpisodes(params).pipe(
       map((result: any) => {
         this.totalPages = result.info.pages;
@@ -43,5 +53,9 @@ export class EpisodesComponent {
     this.currentPage = page;
     this.getEpisodes();
     // console.log(page);
+  }
+  handleSearchChange() {
+    // console.log(this.searchTerm);
+    this.getEpisodes();
   }
 }

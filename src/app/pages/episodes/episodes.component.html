@@ -1,58 +1,71 @@
-<ng-container *ngIf="episodes$ | async as episodes; else loadingCard">
+<ng-container>
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
+  <div class="mb-4 text-sm">
+    Search By Name
+    <input
+      type="text"
+      placeholder="Search by name"
+      [(ngModel)]="searchTerm"
+      (keyup)="handleSearchChange()"
+      class="p-2 border rounded-md w-full text-[#1a1a1a] mt-2"
+    />
+  </div>
 
-  <div
-    class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-4 gap-y-4 pb-10"
-  >
+  <ng-container *ngIf="episodes$ | async as episodes; else loadingCard">
     <div
-      *ngFor="let episode of episodes"
-      class="relative flex flex-col justify-center overflow-hidden w-full"
+      class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-4 gap-y-4 pb-10"
     >
       <div
-        class="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:rounded-lg sm:px-10 hover:rounded-none h-[350px]"
+        *ngFor="let episode of episodes"
+        class="relative flex flex-col justify-center overflow-hidden w-full"
       >
-        <span
-          class="absolute top-10 z-0 h-20 w-20 rounded-full bg-[#2A2A2A] transition-all duration-300 group-hover:scale-[10]"
-        ></span>
-        <div class="relative z-10 w-[100%]">
+        <div
+          class="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:rounded-lg sm:px-10 hover:rounded-none h-[350px]"
+        >
           <span
-            class="grid h-20 w-20 place-items-center rounded-full bg-[#2A2A2A] transition-all duration-300 group-hover:bg-[#0FF1B3]"
-          >
-            <img
-              class="w-12 h-8"
-              src="https://i.ibb.co.com/Tg3tLC5/album.png"
-              alt="album"
-            />
-          </span>
-          <div
-            class="text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90"
-          >
-            <p>Name: {{ episode.name }}</p>
-          </div>
-          <div
-            class="text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90"
-          >
-            <p>Air Date: {{ episode.air_date }}</p>
-          </div>
-          <div
-            class="text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90"
-          >
-            <p>Episode: {{ episode.episode }}</p>
-          </div>
-          <div class="pt-2 text-xl font-semibold">
-            <a
-              [href]="episode.url"
-              target="_blank"
-              class="text-[#2A2A2A] transition-all duration-300 group-hover:text-white hover:underline"
-              >Watch the Url &rarr;
-            </a>
+            class="absolute top-10 z-0 h-20 w-20 rounded-full bg-[#2A2A2A] transition-all duration-300 group-hover:scale-[10]"
+          ></span>
+          <div class="relative z-10 w-[100%]">
+            <span
+              class="grid h-20 w-20 place-items-center rounded-full bg-[#2A2A2A] transition-all duration-300 group-hover:bg-[#0FF1B3]"
+            >
+              <img
+                class="w-12 h-8"
+                src="https://i.ibb.co.com/Tg3tLC5/album.png"
+                alt="album"
+              />
+            </span>
+            <div
+              class="text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90"
+            >
+              <p>Name: {{ episode.name }}</p>
+            </div>
+            <div
+              class="text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90"
+            >
+              <p>Air Date: {{ episode.air_date }}</p>
+            </div>
+            <div
+              class="text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90"
+            >
+              <p>Episode: {{ episode.episode }}</p>
+            </div>
+            <div class="pt-2 text-xl font-semibold">
+              <a
+                [href]="episode.url"
+                target="_blank"
+                class="text-[#2A2A2A] transition-all duration-300 group-hover:text-white hover:underline"
+                >Watch the Url &rarr;
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
+
   <app-pagination
     [currentPage]="currentPage"
     [totalPages]="totalPages"
