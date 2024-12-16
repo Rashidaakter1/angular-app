@@ -1,26 +1,50 @@
 <ng-container *ngIf="characters$ | async as characters; else nodataCard">
-  <div
-    *ngFor="let character of characters"
-    class="max-w-sm bg-white border border-gray-200 rounded-lg shadow"
-  >
-    <a href="#">
-      <img class="rounded-t-lg" [src]="character?.image" alt="" />
-    </a>
-    <div class="p-5">
-      <a href="#">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-          {{ character.name }}
-        </h5>
-      </a>
-      <p class="mb-3 font-normal text-gray-700">
-        {{ character.species }}
-      </p>
-      <a
-        href="#"
-        class="inline-flex characters-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800"
+  <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-12 gap-y-4">
+    <div
+      *ngFor="let character of characters"
+      class="flex flex-col bg-white shadow-sm border border-slate-200 rounded-lg w-96"
+    >
+      <div
+        class="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center"
       >
-        Read more
-      </a>
+        <img
+          class="w-full h-full object-cover"
+          [src]="character.image"
+          alt="profile-picture"
+        />
+      </div>
+      <div class="p-6 text-center">
+        <h4 class="mb-1 text-xl font-semibold text-slate-800">
+          {{ character.name }}
+        </h4>
+        <p class="text-sm font-semibold text-slate-500 uppercase">
+          {{ character.status }}
+        </p>
+        <p class="text-base text-slate-600 mt-4 font-light">
+          {{ character.species }}
+        </p>
+        <p class="text-base text-slate-600 mt-4 font-light">
+          {{ character.origin.name }}- {{ character.origin.url }}
+        </p>
+      </div>
+      <div class="flex justify-center p-6 pt-2 gap-7">
+        <button
+          class="min-w-32 rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          type="button"
+        >
+          Follow
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="flex justify-center items-center space-x-2 mt-4">
+      <button (click)="handlePrevious()">Previous</button>
+
+      <button>
+        {{ totalPages }}
+      </button>
+      <button>Next</button>
     </div>
   </div>
 </ng-container>

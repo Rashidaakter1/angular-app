@@ -17,4 +17,9 @@ export class RickAndMortyService {
       }
     );
   }
+  getEpisodes(params: any): Observable<IResponse> {
+    return this.http.get<IResponse>('https://rickandmortyapi.com/api/episode', {
+      params,
+    });
+  }
 }
